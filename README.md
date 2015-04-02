@@ -30,7 +30,7 @@ The task will create 2 files in .tmp folder: user-petri-experiments.json & bower
 
 2- file-creator : will create 2 files: dist/petri-experiments.json & app/petri-experiments.js.
 
-in the first file (dist/petri-experiments.json) we will have one single JSON file that will merge both Petri Experiment JSON files (that were created in the merge-json taks), and in the secound file (app/petri-experiments.js) we have generated an object for you to mock during your develop process:
+in the first file (dist/petri-experiments.json) we will have one single JSON file that will merge both Petri Experiment JSON files (that were created in the merge-json task), and in the secound file (app/petri-experiments.js) we have generated an object for you to mock during your develop process:
 ```js
 "var W = W || {};
 var PetriExperiments = W.PetriExperiments || function () {
@@ -82,7 +82,7 @@ important key notes:
 
 Although you will not use it, it is nice to know what it does.
 
-this taks will use on build process, to create the petri experiment that you generated in you project at Petri.
+this task will use on build process, to create the petri experiment that you generated in you project at Petri.
 
 #### in case that you dont want to export your experiment to petri set the "dontExport": "false".
 
