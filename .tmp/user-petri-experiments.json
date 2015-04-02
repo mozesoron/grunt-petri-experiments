@@ -1,0 +1,24 @@
+{
+	"petri1": {
+		"scope": "myscope1",
+		"onlyForLoggedInUsers": true,
+		"name": "petri1",
+		"owner": "morp@wix.com",
+		"testGroups": [
+			"true",
+			"false"
+		],
+		"dontExport": ""
+	},
+	"petri2": {
+		"scope": "myscope",
+		"onlyForLoggedInUsers": false,
+		"name": "petri2",
+		"owner": "morp@wix.com11",
+		"testGroups": [
+			"true",
+			"false"
+		],
+		"dontExport": "true"
+	}
+}

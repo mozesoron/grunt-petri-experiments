@@ -1,0 +1,13 @@
+{
+  "bower_petri" :{
+    "scope": "myscope",
+    "onlyForLoggedInUsers": false,
+    "name": "bower_petri",
+    "owner": "morp@wix.com11",
+    "testGroups": [
+      "true",
+      "false"
+    ],
+    "dontExport": "true"
+  }
+}
