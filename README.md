@@ -8,170 +8,71 @@ This plugin requires Grunt.
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-json-angular-translate --save-dev
+npm install grunt-petri-experiments --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-json-angular-translate');
+grunt.loadNpmTasks('grunt-petri-experiments');
 ```
 
-## The "jsonAngularTranslate" task
+## The "petriExperiments" task
 
 ### Overview
-In your project's Gruntfile, add a section named `jsonAngularTranslate` to the data object passed into `grunt.initConfig()`.
+In your project just add the 'petriExperiments' to the different grutn tasks such as 'test', 'serve'.
 
-```js
-grunt.initConfig({
-  jsonAngularTranslate: {
-    jobName: {
-      options: {
-        moduleName: 'translations',
-        extractLanguage: /..(?=\.[^.]*$)/,
-        hasPreferredLanguage: true
-      },
-      files: [{
-        // Target-specific file lists and/or options go here. (see examples below)
-      }]
-    }
+The task itself run two different tasks:
+1- merge-json : read all Petri JSON files in your app folder, where you declaired the Petri Experiment, and will get all Petri Experiments as were declaired in any other bower_component dist folder.
+The task will create 2 files in .tmp folder: user-petri-experiments.json & bower-petri-experiments.json.
+2- file-creator : will create 2 files: dist/petri-experiments.json & app/petri-experiments.js.
+in the first file (dist/petri-experiments.json) we will have one single JSON file that will merge both Petri Experiment JSON files (that were created in the merge-json taks), and in the secound file (app/petri-experiments.js) we have generated an object for you to mock during your develop process:
+
+"var W = W || {};
+var PetriExperiments = W.PetriExperiments || function () {
+  var experiments = {};
+  var scopes = [];
+  experiments.petri1 = 'petri1' ;
+  experiments.petri2 = 'petri2' ;
+  experiments.bower_petri = 'bower_petri' ;
+  experiments.bower_petri_2 = 'bower_petri_2' ;
+  scopes = ['myscope1', 'myscope'];
+  return {
+   experiments : experiments,
+   scopes: scopes
   }
-})
-```
+};
+W.PetriExperiments = PetriExperiments;
+module.exports = W.PetriExperiments;"
 
-### Options
+### Duplicated Petri Experiment in your app/ and bower_comopnent/
+In case that you have duplicated JSON element in your local app/ folder that you inserted and in any bower_component/ folder, you will get a grunt alert of "Duplicated PETRI experiment key" + the key name.
 
-#### options.moduleName
-Type: `String`
-Default value: `translations`
+### How to declare a single Petri Experiment in yout app/ folder?
 
-The module name to use in the `angular.module` calls.
+important key notes:
+1- for each Petri Experiment use a single JSON file.
+2- make sure that the Object declaration name will be the same name property.
+3- the dontExport property is must have even if left blank.
 
-#### options.extractLanguage
-Type: `RegExp|Function`
-Default value: `/..(?=\.[^.]*$)/` (last two characters before the last dot)
-
-A regular expression or a function that returns the processed file's language according to its file path.
-
-#### options.hasPreferredLanguage
-Type: `Boolean`
-Default value: `true`
-
-Whether to set the language and preferred language in config file. Relevant only in angular-translate `1.*`.
-
-#### options.createNestedKeys
-Type: `Boolean`
-Default value: `true`
-
-Whether to create a nested output from dot separated keys.
-
-##### Source json
-```
 {
-  "My.First.Key": "..."
-}
-```
-##### Outputs
-```
-{
-  'My': {
-    'First': {
-      'Key': '...'
-    }
+  "petri1" : {
+    "scope": "myscope1",
+    "onlyForLoggedInUsers": true,
+    "name": "petri1",
+    "owner": "morp@wix.com",
+    "testGroups": [
+      "true",
+      "false"
+    ],
+    "dontExport": ""
   }
 }
-```
-Set this option to false if you use your source language string as the key.
 
-##### createNestedKeys: false, Outputs
-```
-{
-  'My.First.Key': '...'
-}
-```
-
-### Usage Examples
-
-#### Default Options
-In this example, we convert all .json files in `app/scripts/locale` to angular-translate config files in `.tmp/scripts/locale`.
-
-```js
-grunt.initConfig({
-  jsonAngularTranslate: {
-    jobName: {
-      options: {},
-      files: [{
-        expand: true,
-        cwd: 'app/scripts/locale',
-        src: '*.json',
-        dest: '.tmp/scripts/locale',
-        ext: '.js'
-      }]
-    }
-  },
-})
-```
-
-So `app/scripts/locale/messages_ru.js` with contents:
-
-```js
-{
-  "key1": "value1",
-  "key2.subKey1": "value2",
-  "key2.subKey2": "value3"
-}
-```
-
-Will be converted to `.tmp/scripts/locale/messages_ru.js` with contents:
-
-```js
-'use strict';
-
-try {
-  angular.module('translations');
-} catch (e) {
-  angular.module('translations', ['pascalprecht.translate']);
-}
-
-angular.module('translations').config(function ($translateProvider) {
-  $translateProvider.translations('ru', {
-    'key1': 'value1',
-    'key2': {
-      'subKey1': 'value2',
-      'subKey2': 'value3'
-    }
-  });
-  $translateProvider.preferredLanguage('ru');
-});
-```
-
-#### Custom Options
-In this example, we convert all .json files in `app/scripts/locale` to angular-translate config files in `.tmp/scripts/locale` with custom `moduleName`. Thanks to the custom `extractLanguage` file's language code will be extracted from the first two characters in the file name, so filepath `app/scripts/locale/he_messages.json` will get language code `he`.
-
-```js
-grunt.initConfig({
-  jsonAngularTranslate: {
-    jobName: {
-      options: {
-        moduleName: 'myAppTranslations',
-        extractLanguage: function (filepath) {
-          return filepath.split('/').reverse()[0].slice(2);
-        }
-      },
-      files: [{
-        expand: true,
-        cwd: 'app/scripts/locale',
-        src: '*.json',
-        dest: '.tmp/scripts/locale',
-        ext: '.js'
-      }]
-    }
-  },
-})
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+### A third hidden task
+Although you will not use it, it is nice to know what it does.
+this taks will use on build process, to create the petri experiment that you generated in you project at Petri.
+#### in case that you dont want to export your experiment to petri set the "dontExport": "false".
 
 ## License
-Copyright (c) 2014 Shahar Talmi. Licensed under the MIT license.
+Copyright (c) 2015 Oron Mozes. Licensed under the MIT license.
