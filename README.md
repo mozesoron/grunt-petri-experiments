@@ -1,6 +1,6 @@
-# grunt-json-angular-translate [![Build Status](https://travis-ci.org/shahata/grunt-json-angular-translate.svg?branch=master)](https://travis-ci.org/shahata/grunt-json-angular-translate)
+# grunt-petri-experiments 
 
-> Converts json files to [angular-translate](https://github.com/angular-translate/angular-translate) config javascript files.
+> Define experiments in client side json. 
 
 ## Getting Started
 This plugin requires Grunt.
