@@ -51,7 +51,7 @@ module.exports = W.PetriExperiments;"
 ```
 ### Duplicated Petri Experiment in your app/ and bower_comopnent/
 
-In case that you have duplicated JSON element in your local app/ folder that you inserted and in any bower_component/ folder, you will get a grunt alert of "Duplicated PETRI experiment key" + the key name.
+In case that you have duplicated JSON element in your local app/ folder and in any bower_component/*/dist folder, you will get a grunt alert: "Duplicated PETRI experiment key" + the key name.
 
 ### How to declare a single Petri Experiment in yout app/ folder?
 
