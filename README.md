@@ -20,11 +20,11 @@ grunt.loadNpmTasks('grunt-petri-experiments');
 ## The "petriExperiments" task
 
 ### Overview
-In your project just add the 'petriExperiments' to the different grutn tasks such as 'test', 'serve', etc'.
+In your project just add the 'petriExperiments' to the different grunt tasks such as 'test', 'serve', etc'.
 
 The task itself run two different tasks:
 
-1- merge-json : read all Petri JSON files in your app folder, where you declaired the Petri Experiment, and will get all Petri Experiments as were declaired in any other bower_component dist folder.
+1- merge-json : read all Petri JSON files in your app folder, where you declared the Petri Experiment, and will get all Petri Experiments as were declared in any other bower_component dist folder.
 
 The task will create 2 files in .tmp folder: user-petri-experiments.json & bower-petri-experiments.json.
 
@@ -53,7 +53,7 @@ module.exports = W.PetriExperiments;"
 
 In case that you have duplicated JSON element in your local app/ folder and in any bower_component/*/dist folder, you will get a grunt alert: "Duplicated PETRI experiment key" + the key name.
 
-### How to declare a single Petri Experiment in yout app/ folder?
+### How to declare a single Petri Experiment in your app/ folder?
 
 important key notes:
 
@@ -84,7 +84,7 @@ Although you will not use it, it is nice to know what it does.
 
 this task will use on build process, to create the petri experiment that you generated in you project at Petri.
 
-#### in case that you dont want to export your experiment to petri set the "dontExport": "false".
+#### in case that you don't want to export your experiment to petri set the "dontExport": "false".
 
 ## License
 Copyright (c) 2015 Oron Mozes. Licensed under the MIT license.
